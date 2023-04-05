@@ -9,7 +9,7 @@ import { DataModule } from './data.module';
 @Module({
 	imports: [
 		MongooseModule.forRoot(
-			`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PWD}@${process.env.MONGO_HOST}/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`,
+			'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false',
 		),
 		AuthModule,
 		DataModule,
