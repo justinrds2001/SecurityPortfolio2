@@ -22,7 +22,7 @@ export class CategoryController {
 	) {}
 
 	@Post()
-	@UseGuards(RolesGuard)
+	//@UseGuards(RolesGuard)
 	async createCategory(@Body() category: Category): Promise<Category> {
 		return await this.categoryService.createCategory(category);
 	}

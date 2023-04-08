@@ -20,8 +20,8 @@ export class RolesGuard implements CanActivate {
 		const request = context.switchToHttp().getRequest();
 		const authHeader = request.headers.authorization;
 
-		try {
-			const token = await this.authService.verifyToken(authHeader);
+		try {	
+			const token:any = await this.authService.verifyToken(authHeader);
 			const isAdmin = await this.userService.checkIfAdmin(token.id);
 			return isAdmin;
 		} catch (e) {

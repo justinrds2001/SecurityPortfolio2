@@ -27,7 +27,7 @@ export class OrganisationController {
 	}
 
 	@Post()
-	@UseGuards(RolesGuard)
+	//@UseGuards(RolesGuard)
 	async createOrganisation(
 		@Body('name') name: string,
 		@Body('organisationImage') organisationImage: string,

@@ -28,10 +28,11 @@ import { DataModule } from './data.module';
 	providers: [],
 })
 export class AppModule {
-	configure(consumer: MiddlewareConsumer) {
+	/*configure(consumer: MiddlewareConsumer) {
 		consumer
 			.apply(TokenMiddleware)
 			.exclude({ path: 'api/auth/login', method: RequestMethod.POST })
+			.exclude({ path: 'api/auth/register', method: RequestMethod.POST })
 			.forRoutes('*');
-	}
+	}*/
 }

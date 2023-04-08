@@ -226,7 +226,7 @@ export class AuthService {
 	async deleteIdentity(id: string) {
 		const identity = await this.identityModel.findOne({ _id: id });
 		if (identity != null) {
-			return await identity.remove();
+			return await identity.deleteOne();
 		}
 	}
 
