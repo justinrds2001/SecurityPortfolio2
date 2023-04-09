@@ -10,7 +10,6 @@ import { Identity, IdentityDocument } from './identity.schema';
 import { User, UserDocument } from '../user/user.schema';
 import { Role } from '../models/auth.model';
 import { OrganisationService } from '../organisation/organisation.service';
-import { userInfo } from 'os';
 
 @Injectable()
 export class AuthService {
@@ -238,10 +237,12 @@ export class AuthService {
 
 		const user = await this.userModel.findOne({ email });
 
+		const expiresIn = '8h';
 		return new Promise((resolve, reject) => {
 			sign(
 				{ id: user.id },
 				process.env.JWT_SECRET,
+				{ expiresIn },
 				(err: Error, token: string) => {
 					if (err) reject(err);
 					else resolve(token);

@@ -20,7 +20,7 @@ export class FieldController {
 	// ##### User #####
 
 	@Post()
-	//@UseGuards(RolesGuard)
+	@UseGuards(RolesGuard)
 	async createField(@Body() newField: Field): Promise<Field> {
 		return await this.fieldService.createField(newField);
 	}

@@ -27,11 +27,18 @@ export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
 	@Post('register')
-	//@UseGuards(RolesGuard)
+	@UseGuards(RolesGuard)
 	async register(@Body() newUser: UserRegistration): Promise<ResourceId> {
 		let identityUser = null;
 
 		try {
+			const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{12,}$/;
+			if (!passwordRegex.test(newUser.password)) {
+				throw new HttpException(
+					'Password must be at least 12 characters long, contain at least one uppercase letter, one number and one special character',
+					HttpStatus.BAD_REQUEST,
+				);
+			}
 			identityUser = await this.authService.registerUser(
 				newUser.email,
 				newUser.password,
@@ -59,8 +66,12 @@ export class AuthController {
 					'Email is already in use',
 					HttpStatus.BAD_REQUEST,
 				);
+			} else if (e.message == 'Password must be at least 12 characters long, contain at least one uppercase letter, one number and one special character') {
+				throw new HttpException(
+					'Password must be at least 12 characters long, contain at least one uppercase letter, one number and one special character',
+					HttpStatus.UNAUTHORIZED,
+				);
 			}
-
 			throw new HttpException('Invalid input', HttpStatus.BAD_REQUEST);
 		}
 	}

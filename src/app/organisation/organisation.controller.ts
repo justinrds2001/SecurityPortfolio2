@@ -10,10 +10,10 @@ import {
 	Delete,
 	UseGuards,
 } from '@nestjs/common';
+import { RateLimit } from 'nestjs-rate-limiter';
 import { RolesGuard } from 'src/roles/roles.guard';
 import { ContractService } from '../contract/contract.service';
 import { Organisation } from './organisation.schema';
-
 import { OrganisationService } from './organisation.service';
 
 @Controller('organisation')
@@ -21,13 +21,14 @@ export class OrganisationController {
 	constructor(private readonly organisationService: OrganisationService,
 		private readonly contractService: ContractService) { }
 
+	//@RateLimit({ keyPrefix: 'sign-up', points: 1, duration: 5, errorMessage: 'Cannot send request more than once every 5 seconds.' })
 	@Get()
 	async getOrganisations() {
 		return await this.organisationService.getOrganisations();
 	}
 
 	@Post()
-	//@UseGuards(RolesGuard)
+	@UseGuards(RolesGuard)
 	async createOrganisation(
 		@Body('name') name: string,
 		@Body('organisationImage') organisationImage: string,
